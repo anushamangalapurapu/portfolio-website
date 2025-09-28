@@ -1,0 +1,32 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="400" fill="#f8fafc"/>
+  <rect x="50" y="50" width="500" height="300" fill="white" stroke="#e2e8f0" stroke-width="2" rx="8"/>
+  
+  <!-- Analytics dashboard mockup -->
+  <rect x="80" y="80" width="440" height="30" fill="#2563eb" opacity="0.1" rx="8"/>
+  <text x="300" y="100" font-family="Arial, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle" font-weight="bold">Social Media Analytics</text>
+  
+  <!-- Charts and metrics -->
+  <rect x="80" y="130" width="200" height="100" fill="#10b981" opacity="0.1" rx="8"/>
+  <circle cx="120" cy="160" r="20" fill="none" stroke="#10b981" stroke-width="4" stroke-dasharray="50 10"/>
+  <text x="120" y="165" font-family="Arial, sans-serif" font-size="12" fill="#10b981" text-anchor="middle" font-weight="bold">75%</text>
+  <text x="180" y="155" font-family="Arial, sans-serif" font-size="12" fill="#64748b">Engagement</text>
+  <text x="180" y="175" font-family="Arial, sans-serif" font-size="10" fill="#64748b">+12% vs last month</text>
+  
+  <rect x="320" y="130" width="200" height="100" fill="#f59e0b" opacity="0.1" rx="8"/>
+  <rect x="340" y="150" width="15" height="40" fill="#f59e0b" rx="2"/>
+  <rect x="360" y="160" width="15" height="30" fill="#f59e0b" rx="2"/>
+  <rect x="380" y="145" width="15" height="45" fill="#f59e0b" rx="2"/>
+  <rect x="400" y="155" width="15" height="35" fill="#f59e0b" rx="2"/>
+  <text x="420" y="155" font-family="Arial, sans-serif" font-size="12" fill="#64748b">Followers</text>
+  <text x="420" y="175" font-family="Arial, sans-serif" font-size="10" fill="#64748b">24.5k total</text>
+  
+  <!-- Timeline -->
+  <rect x="80" y="250" width="440" height="70" fill="#64748b" opacity="0.05" rx="8"/>
+  <rect x="100" y="270" width="8" height="30" fill="#2563eb" rx="4"/>
+  <rect x="120" y="275" width="8" height="25" fill="#10b981" rx="4"/>
+  <rect x="140" y="280" width="8" height="20" fill="#f59e0b" rx="4"/>
+  <rect x="160" y="270" width="8" height="30" fill="#ef4444" rx="4"/>
+  
+  <text x="300" y="380" font-family="Arial, sans-serif" font-size="16" fill="#64748b" text-anchor="middle">Social Media Analytics</text>
+</svg>
