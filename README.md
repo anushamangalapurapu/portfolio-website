@@ -148,7 +148,39 @@ Example with Formspree:
 2. **Enable caching**: Configure proper cache headers if using custom hosting
 3. **Minimize CSS/JS**: Use minification tools for production
 
-## 🌐 Deployment Options
+## 🚀 Git Repository Setup (COMPLETED)
+
+✅ **Your repository is ready for upload!**
+
+The following has been completed:
+- Git repository initialized
+- All files committed with descriptive message
+- `.gitignore` file created to exclude system files
+- Branch set to `main` (modern standard)
+
+### Next Steps for GitHub:
+
+1. **Create a new repository on GitHub**:
+   - Go to [GitHub.com](https://github.com) and sign in
+   - Click "New repository" (green button)
+   - Name it: `portfolio-website` or `personal-website`
+   - Make it **Public** (required for free GitHub Pages)
+   - **DO NOT** check "Initialize with README" (we already have files)
+
+2. **Upload your code**:
+   ```bash
+   git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+   git push -u origin main
+   ```
+
+3. **Enable GitHub Pages**:
+   - Go to your repository → Settings → Pages
+   - Source: Deploy from a branch
+   - Branch: main / (root)
+   - Save
+   - Your site will be live at: `https://YOUR_USERNAME.github.io/YOUR_REPO_NAME`
+
+## 🌐 Other Deployment Options
 
 ### GitHub Pages
 1. Push your code to a GitHub repository
