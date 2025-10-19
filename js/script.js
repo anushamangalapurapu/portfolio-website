@@ -334,8 +334,139 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // Initialize YouTube section
+    initializeYouTube();
+    
     console.log('Personal Website Template loaded successfully! 🚀');
 });
+
+// YouTube Integration
+function initializeYouTube() {
+    // Sample video data
+    const sampleVideos = [
+        {
+            id: 'sample1',
+            title: 'Career Growth in Tech: My Journey from Beginner to Professional',
+            thumbnail: createVideoThumbnail('Tech Career Tips', '#ff0000'),
+            views: 1250,
+            publishedAt: '2024-01-15T00:00:00Z',
+            duration: '8:42'
+        },
+        {
+            id: 'sample2',
+            title: 'Salesforce Administration Best Practices and Tips',
+            thumbnail: createVideoThumbnail('Salesforce Tips', '#00a1e0'),
+            views: 980,
+            publishedAt: '2024-02-08T00:00:00Z',
+            duration: '12:15'
+        },
+        {
+            id: 'sample3',
+            title: 'Data Analysis with Power BI: Creating Professional Dashboards',
+            thumbnail: createVideoThumbnail('Power BI Tutorial', '#f2c811'),
+            views: 2100,
+            publishedAt: '2024-02-20T00:00:00Z',
+            duration: '15:30'
+        }
+    ];
+
+    displayVideos(sampleVideos);
+    updateYouTubeStats({
+        videoCount: 15,
+        subscriberCount: 500,
+        viewCount: 25000
+    });
+}
+
+// Create SVG thumbnail for sample videos
+function createVideoThumbnail(text, color) {
+    const svg = `
+        <svg width="320" height="180" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100%" height="100%" fill="#f0f0f0"/>
+            <rect x="40" y="40" width="240" height="100" fill="${color}" rx="8"/>
+            <polygon points="140,70 140,110 180,90" fill="white"/>
+            <text x="160" y="135" font-family="Arial" font-size="12" text-anchor="middle" fill="#666">
+                ${text}
+            </text>
+        </svg>
+    `;
+    return 'data:image/svg+xml;base64,' + btoa(svg);
+}
+
+// Format numbers for display
+function formatNumber(num) {
+    if (num >= 1000000) {
+        return (num / 1000000).toFixed(1) + 'M';
+    }
+    if (num >= 1000) {
+        return (num / 1000).toFixed(1) + 'K';
+    }
+    return num.toString();
+}
+
+// Format date for display
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffTime = Math.abs(now - date);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 1) return '1 day ago';
+    if (diffDays < 7) return `${diffDays} days ago`;
+    if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+    if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
+    return `${Math.floor(diffDays / 365)} years ago`;
+}
+
+// Create video card HTML
+function createVideoCard(video) {
+    return `
+        <div class="video-card" onclick="window.open('https://www.youtube.com/@anushajournal', '_blank')">
+            <div class="video-thumbnail">
+                <img src="${video.thumbnail}" alt="${video.title}" onerror="this.style.display='none'">
+                <div class="video-play-overlay">
+                    <i class="fas fa-play"></i>
+                </div>
+                ${video.duration ? `<div class="video-duration">${video.duration}</div>` : ''}
+            </div>
+            <div class="video-info">
+                <h4 class="video-title">${video.title}</h4>
+                <div class="video-stats">
+                    <div class="video-views">
+                        <i class="fas fa-eye"></i>
+                        <span>${formatNumber(video.views)}</span>
+                    </div>
+                    <div class="video-date">${formatDate(video.publishedAt)}</div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Display videos in the grid
+function displayVideos(videos) {
+    const videosContainer = document.getElementById('youtube-videos');
+    if (!videosContainer) return;
+
+    const videoCards = videos.map(video => createVideoCard(video)).join('');
+    videosContainer.innerHTML = videoCards;
+}
+
+// Update YouTube channel stats
+function updateYouTubeStats(stats) {
+    const elements = {
+        'video-count': stats.videoCount || 15,
+        'subscriber-count': formatNumber(stats.subscriberCount || 500),
+        'view-count': formatNumber(stats.viewCount || 25000)
+    };
+
+    Object.entries(elements).forEach(([id, value]) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = value;
+        }
+    });
+}
 
 // Utility function to check if element is in viewport
 function isInViewport(element) {
