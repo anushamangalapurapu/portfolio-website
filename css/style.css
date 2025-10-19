@@ -406,10 +406,19 @@ p {
     align-items: start;
 }
 
-.certifications-column {
+.certifications-left-column,
+.certifications-right-column {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+}
+
+.certifications-left-column {
+    /* Additional styles for left column if needed */
+}
+
+.certifications-right-column {
+    /* Additional styles for right column if needed */
 }
 
 .certification-category {
@@ -778,7 +787,8 @@ textarea {
         gap: 2rem;
     }
 
-    .certifications-column {
+    .certifications-left-column,
+    .certifications-right-column {
         gap: 1.5rem;
     }
 }
