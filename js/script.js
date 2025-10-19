@@ -84,27 +84,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Contact Form Handling
+    // Contact Form Handling with EmailJS
     const contactForm = document.getElementById('contactForm');
     
     contactForm.addEventListener('submit', function(e) {
-        // Don't prevent default if using Formspree
-        if (contactForm.action.includes('formspree.io')) {
-            // Let Formspree handle the submission
-            const submitBtn = contactForm.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-            
-            // Re-enable button after a delay (Formspree will redirect)
-            setTimeout(() => {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }, 3000);
-            return; // Let form submit naturally
-        }
-        
-        // For other form handlers, prevent default and validate
         e.preventDefault();
         
         // Get form data
@@ -125,13 +108,35 @@ document.addEventListener('DOMContentLoaded', function() {
         submitBtn.textContent = 'Sending...';
         submitBtn.disabled = true;
         
-        // Simulate form submission (replace with actual form handling)
-        setTimeout(() => {
-            showMessage('Thank you for your message! I\'ll get back to you soon.', 'success');
-            contactForm.reset();
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        }, 1500);
+        // EmailJS configuration - REPLACE THESE WITH YOUR ACTUAL VALUES
+        const serviceID = 'YOUR_SERVICE_ID';      // e.g., 'service_gmail123'
+        const templateID = 'YOUR_TEMPLATE_ID';    // e.g., 'template_abc123'
+        
+        // Prepare template parameters
+        const templateParams = {
+            from_name: name,
+            from_email: email,
+            subject: subject,
+            message: message,
+            to_email: 'anusha05aug@gmail.com'
+        };
+        
+        // Send email using EmailJS
+        emailjs.send(serviceID, templateID, templateParams)
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                showMessage('Thank you for your message! I\'ll get back to you soon.', 'success');
+                contactForm.reset();
+            })
+            .catch(function(error) {
+                console.error('FAILED...', error);
+                showMessage('Sorry, there was an error sending your message. Please try again or email me directly.', 'error');
+            })
+            .finally(function() {
+                // Re-enable button
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
     });
     
     // Form validation function

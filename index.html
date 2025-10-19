@@ -506,7 +506,7 @@
                     </div>
                 </div>
                 <div class="contact-form-container">
-                    <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                    <form class="contact-form" id="contactForm">
                         <div class="form-group">
                             <input type="text" id="name" name="name" placeholder="Your Name" required>
                         </div>
@@ -548,6 +548,11 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS - REPLACE WITH YOUR ACTUAL PUBLIC KEY
+        emailjs.init("YOUR_PUBLIC_KEY"); // e.g., "user_xyz789abc123"
+    </script>
     <script src="js/script.js"></script>
 </body>
 </html>
