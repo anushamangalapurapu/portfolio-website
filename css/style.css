@@ -406,6 +406,12 @@ p {
     align-items: start;
 }
 
+.certifications-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
 .certification-category {
     margin-bottom: 2.5rem;
 }
@@ -770,6 +776,10 @@ textarea {
     .certifications-content {
         grid-template-columns: 1fr;
         gap: 2rem;
+    }
+
+    .certifications-column {
+        gap: 1.5rem;
     }
 }
 
