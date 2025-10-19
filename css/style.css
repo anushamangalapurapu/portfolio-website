@@ -408,17 +408,20 @@ p {
 
 .cert-card {
     background: white;
-    border-radius: 16px;
+    border-radius: 12px;
     padding: 2rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    border: 1px solid var(--border-color);
-    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e7eb;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: fit-content;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
 }
 
 .cert-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .cert-icon {
@@ -447,10 +450,12 @@ p {
 
 .cert-content h3 {
     color: var(--text-color);
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: 600;
     margin-bottom: 1rem;
     line-height: 1.3;
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
 .cert-badge {
@@ -519,25 +524,6 @@ p {
     line-height: 1.4;
 }
 
-/* Special styling for primary cert */
-.primary-cert {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-    color: white;
-}
-
-.primary-cert .cert-content h3,
-.primary-cert .cert-year,
-.primary-cert .cert-badge {
-    color: white;
-}
-
-.primary-cert .cert-year {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.primary-cert .cert-badge {
-    background: rgba(255, 255, 255, 0.2);
-}
 
 /* Special styling for themed cards */
 .hubspot {
