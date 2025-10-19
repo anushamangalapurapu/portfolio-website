@@ -1,5 +1,7 @@
 // Wait for DOM to be fully loaded
+console.log('🔧 JavaScript file loaded!');
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('📄 DOM content loaded!');
     
     // Mobile Navigation Toggle
     const hamburger = document.querySelector('.hamburger');
@@ -349,7 +351,7 @@ class YouTubeAPI {
         // 3. Enable YouTube Data API v3
         // 4. Create credentials (API Key)
         // 5. Restrict the API key to YouTube Data API v3
-        this.apiKey = 'YOUR_YOUTUBE_API_KEY_HERE'; // Replace with your actual API key
+        this.apiKey = 'AIzaSyDMlpS0C0SaWbnkRoraoP-TtljEyiGFYPU'; // Replace with your actual API key
         this.channelId = null;
         this.channelHandle = '@anushajournal';
         this.baseUrl = 'https://www.googleapis.com/youtube/v3';
@@ -357,76 +359,132 @@ class YouTubeAPI {
 
     // Get channel ID from handle
     async getChannelId() {
-        if (this.channelId) return this.channelId;
+        if (this.channelId) {
+            console.log('📺 Using cached channel ID:', this.channelId);
+            return this.channelId;
+        }
+        
+        console.log('🔍 Searching for channel:', this.channelHandle);
         
         try {
-            const response = await fetch(
-                `${this.baseUrl}/search?part=snippet&type=channel&q=${this.channelHandle}&key=${this.apiKey}`
-            );
+            const searchUrl = `${this.baseUrl}/search?part=snippet&type=channel&q=${this.channelHandle}&key=${this.apiKey}`;
+            console.log('🌐 API Request URL:', searchUrl);
+            
+            const response = await fetch(searchUrl);
             const data = await response.json();
+            
+            console.log('📊 Channel search response:', data);
+            
+            if (data.error) {
+                console.error('❌ YouTube API Error:', data.error);
+                return null;
+            }
             
             if (data.items && data.items.length > 0) {
                 this.channelId = data.items[0].snippet.channelId;
+                console.log('✅ Found channel ID:', this.channelId);
+                console.log('📋 Channel info:', data.items[0].snippet);
                 return this.channelId;
+            } else {
+                console.warn('⚠️ No channel found for handle:', this.channelHandle);
             }
         } catch (error) {
-            console.error('Error fetching channel ID:', error);
+            console.error('❌ Error fetching channel ID:', error);
         }
         return null;
     }
 
     // Get channel statistics
     async getChannelStats() {
+        console.log('📊 Fetching channel statistics...');
         const channelId = await this.getChannelId();
-        if (!channelId) return null;
+        if (!channelId) {
+            console.warn('⚠️ Cannot fetch stats - no channel ID');
+            return null;
+        }
 
         try {
-            const response = await fetch(
-                `${this.baseUrl}/channels?part=statistics&id=${channelId}&key=${this.apiKey}`
-            );
+            const statsUrl = `${this.baseUrl}/channels?part=statistics&id=${channelId}&key=${this.apiKey}`;
+            console.log('🌐 Stats API URL:', statsUrl);
+            
+            const response = await fetch(statsUrl);
             const data = await response.json();
+            
+            console.log('📊 Channel stats response:', data);
+            
+            if (data.error) {
+                console.error('❌ Stats API Error:', data.error);
+                return null;
+            }
             
             if (data.items && data.items.length > 0) {
                 const stats = data.items[0].statistics;
-                return {
+                const processedStats = {
                     subscriberCount: parseInt(stats.subscriberCount || 0),
                     videoCount: parseInt(stats.videoCount || 0),
                     viewCount: parseInt(stats.viewCount || 0)
                 };
+                console.log('✅ Processed stats:', processedStats);
+                return processedStats;
+            } else {
+                console.warn('⚠️ No stats data found');
             }
         } catch (error) {
-            console.error('Error fetching channel stats:', error);
+            console.error('❌ Error fetching channel stats:', error);
         }
         return null;
     }
 
     // Get latest videos from channel
     async getLatestVideos(maxResults = 3) {
+        console.log('🎬 Fetching latest videos...');
         const channelId = await this.getChannelId();
-        if (!channelId) return [];
+        if (!channelId) {
+            console.warn('⚠️ Cannot fetch videos - no channel ID');
+            return [];
+        }
 
         try {
             // Get video list
-            const searchResponse = await fetch(
-                `${this.baseUrl}/search?part=snippet&channelId=${channelId}&maxResults=${maxResults}&order=date&type=video&key=${this.apiKey}`
-            );
+            const searchUrl = `${this.baseUrl}/search?part=snippet&channelId=${channelId}&maxResults=${maxResults}&order=date&type=video&key=${this.apiKey}`;
+            console.log('🌐 Video search URL:', searchUrl);
+            
+            const searchResponse = await fetch(searchUrl);
             const searchData = await searchResponse.json();
             
+            console.log('🎬 Video search response:', searchData);
+            
+            if (searchData.error) {
+                console.error('❌ Video search API Error:', searchData.error);
+                return [];
+            }
+            
             if (!searchData.items || searchData.items.length === 0) {
+                console.warn('⚠️ No videos found');
                 return [];
             }
 
+            console.log(`✅ Found ${searchData.items.length} videos`);
+
             // Get video statistics and details
             const videoIds = searchData.items.map(item => item.id.videoId).join(',');
-            const detailsResponse = await fetch(
-                `${this.baseUrl}/videos?part=statistics,contentDetails&id=${videoIds}&key=${this.apiKey}`
-            );
+            const detailsUrl = `${this.baseUrl}/videos?part=statistics,contentDetails&id=${videoIds}&key=${this.apiKey}`;
+            console.log('🌐 Video details URL:', detailsUrl);
+            
+            const detailsResponse = await fetch(detailsUrl);
             const detailsData = await detailsResponse.json();
+            
+            console.log('📊 Video details response:', detailsData);
+            
+            if (detailsData.error) {
+                console.error('❌ Video details API Error:', detailsData.error);
+                return [];
+            }
 
             // Combine search results with detailed statistics
-            return searchData.items.map((item, index) => {
+            const processedVideos = searchData.items.map((item, index) => {
                 const details = detailsData.items[index];
-                return {
+                const video = {
                     id: item.id.videoId,
                     title: item.snippet.title,
                     thumbnail: item.snippet.thumbnails.medium.url,
@@ -434,9 +492,14 @@ class YouTubeAPI {
                     publishedAt: item.snippet.publishedAt,
                     duration: this.formatDuration(details.contentDetails.duration)
                 };
+                console.log(`🎬 Video ${index + 1}:`, video);
+                return video;
             });
+            
+            console.log(`✅ Successfully processed ${processedVideos.length} videos`);
+            return processedVideos;
         } catch (error) {
-            console.error('Error fetching videos:', error);
+            console.error('❌ Error fetching videos:', error);
             return [];
         }
     }
@@ -464,44 +527,60 @@ class YouTubeAPI {
 
 // Initialize YouTube integration
 function initializeYouTube() {
+    console.log('🎬 Initializing YouTube integration...');
     const youtube = new YouTubeAPI();
     
     if (!youtube.isConfigured()) {
-        console.warn('YouTube API key not configured. Using sample data.');
+        console.warn('❌ YouTube API key not configured. Using sample data.');
+        console.log('💡 To enable live data: Replace API key in js/script.js line 352');
         // Fall back to sample data
         loadSampleData();
         return;
     }
 
+    console.log('✅ YouTube API key detected. Loading live data...');
     // Load real data from YouTube API
     loadYouTubeData(youtube);
 }
 
 // Load real data from YouTube API
 async function loadYouTubeData(youtube) {
+    console.log('🚀 Loading YouTube data from API...');
+    
     try {
         // Show loading state
         showLoadingState();
         
         // Load videos and stats in parallel
+        console.log('🔄 Fetching videos and stats in parallel...');
         const [videos, stats] = await Promise.all([
             youtube.getLatestVideos(3),
             youtube.getChannelStats()
         ]);
         
+        console.log('📊 API Results:');
+        console.log('- Videos:', videos);
+        console.log('- Stats:', stats);
+        
         if (videos && videos.length > 0) {
+            console.log(`✅ Displaying ${videos.length} videos`);
             displayVideos(videos);
         } else {
-            loadSampleData(); // Fallback to sample data
+            console.warn('⚠️ No videos received, falling back to sample data');
+            loadSampleData();
         }
         
         if (stats) {
+            console.log('✅ Updating channel statistics');
             updateYouTubeStats(stats);
+        } else {
+            console.warn('⚠️ No stats received, keeping default values');
         }
         
     } catch (error) {
-        console.error('Error loading YouTube data:', error);
-        loadSampleData(); // Fallback to sample data
+        console.error('❌ Error loading YouTube data:', error);
+        console.log('🔄 Falling back to sample data');
+        loadSampleData();
     }
 }
 
