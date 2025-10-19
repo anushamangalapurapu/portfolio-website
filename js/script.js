@@ -109,8 +109,8 @@ document.addEventListener('DOMContentLoaded', function() {
         submitBtn.disabled = true;
         
         // EmailJS configuration - REPLACE THESE WITH YOUR ACTUAL VALUES
-        const serviceID = 'YOUR_SERVICE_ID';      // e.g., 'service_gmail123'
-        const templateID = 'YOUR_TEMPLATE_ID';    // e.g., 'template_abc123'
+        const serviceID = 'service_5k2f6tx';      // e.g., 'service_gmail123'
+        const templateID = 'template_b4b773e';    // e.g., 'template_abc123'
         
         // Prepare template parameters
         const templateParams = {
