@@ -406,21 +406,6 @@ p {
     align-items: start;
 }
 
-.certifications-left-column,
-.certifications-right-column {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.certifications-left-column {
-    /* Additional styles for left column if needed */
-}
-
-.certifications-right-column {
-    /* Additional styles for right column if needed */
-}
-
 .certification-category {
     margin-bottom: 2.5rem;
 }
@@ -784,12 +769,7 @@ textarea {
 
     .certifications-content {
         grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .certifications-left-column,
-    .certifications-right-column {
-        gap: 1.5rem;
+        gap: 3rem;
     }
 }
 
