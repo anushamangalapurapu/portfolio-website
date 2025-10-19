@@ -434,11 +434,6 @@ p {
     background-color: var(--accent-color);
 }
 
-.certification-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-}
 
 .certification-item {
     display: flex;
