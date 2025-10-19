@@ -538,60 +538,86 @@ p {
 }
 
 .channel-info {
-    background: linear-gradient(135deg, #ff0000, #cc0000);
-    border-radius: 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
     padding: 2.5rem;
     color: white;
-    box-shadow: 0 10px 30px rgba(255, 0, 0, 0.2);
+    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.channel-info::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    border-radius: 20px;
 }
 
 .channel-header {
     display: flex;
     align-items: flex-start;
     gap: 1.5rem;
+    position: relative;
+    z-index: 1;
 }
 
 .channel-avatar {
     width: 80px;
     height: 80px;
-    background: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15));
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .channel-avatar i {
     font-size: 2.5rem;
     color: white;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
 }
 
 .channel-details h3 {
     font-size: 1.8rem;
     margin-bottom: 1rem;
     color: white;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .channel-description {
     margin-bottom: 2rem;
     line-height: 1.6;
-    opacity: 0.9;
+    opacity: 0.95;
+    font-size: 1rem;
 }
 
 .btn-youtube {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.15);
     color: white;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
 }
 
 .btn-youtube:hover {
     background: white;
-    color: #ff0000;
+    color: #667eea;
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+    border-color: white;
 }
 
 .youtube-videos {
@@ -613,16 +639,18 @@ p {
 
 .video-card {
     background: white;
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
     cursor: pointer;
+    border: 1px solid rgba(102, 126, 234, 0.1);
 }
 
 .video-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(102, 126, 234, 0.15);
+    border-color: rgba(102, 126, 234, 0.2);
 }
 
 .video-thumbnail {
@@ -649,21 +677,24 @@ p {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 0, 0, 0.9);
+    width: 65px;
+    height: 65px;
+    background: rgba(102, 126, 234, 0.95);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 3px solid rgba(255, 255, 255, 0.3);
 }
 
 .video-card:hover .video-play-overlay {
     opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
 }
 
 .video-duration {
@@ -713,25 +744,42 @@ p {
 }
 
 .video-placeholder {
-    background: var(--background-alt);
-    border-radius: 12px;
+    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+    border-radius: 16px;
     height: 240px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px dashed var(--border-color);
+    border: 2px dashed rgba(102, 126, 234, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.video-placeholder::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.02) 0%, rgba(118, 75, 162, 0.02) 100%);
 }
 
 .placeholder-content {
     text-align: center;
     color: var(--text-light);
+    position: relative;
+    z-index: 1;
 }
 
 .placeholder-content i {
     font-size: 3rem;
     margin-bottom: 1rem;
-    color: #ff0000;
-    opacity: 0.5;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0.6;
 }
 
 .placeholder-content p {
@@ -747,22 +795,41 @@ p {
 }
 
 .stat-item {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 12px;
+    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+    padding: 2rem 1.5rem;
+    border-radius: 16px;
     text-align: center;
-    box-shadow: var(--shadow);
-    transition: transform 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(102, 126, 234, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .stat-item:hover {
-    transform: translateY(-3px);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.12);
+    border-color: rgba(102, 126, 234, 0.15);
 }
 
 .stat-item i {
-    font-size: 2rem;
-    color: #ff0000;
-    margin-bottom: 0.5rem;
+    font-size: 2.2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.75rem;
+    filter: drop-shadow(0 2px 4px rgba(102, 126, 234, 0.1));
 }
 
 .stat-number {

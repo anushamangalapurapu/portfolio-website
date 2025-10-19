@@ -1,7 +1,23 @@
 // Wait for DOM to be fully loaded
 console.log('🔧 JavaScript file loaded!');
+console.log('📍 Current location:', window.location.href);
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('📄 DOM content loaded!');
+    
+    // Test YouTube setup after class is defined
+    setTimeout(() => {
+        try {
+            console.log('=== YOUTUBE API TEST ===');
+            const testAPI = new YouTubeAPI();
+            console.log('API Key configured:', testAPI.isConfigured());
+            console.log('API Key (first 10 chars):', testAPI.apiKey.substring(0, 10) + '...');
+            console.log('Channel handle:', testAPI.channelHandle);
+            console.log('========================');
+        } catch (e) {
+            console.error('❌ Error in YouTube test:', e);
+        }
+    }, 100);
     
     // Mobile Navigation Toggle
     const hamburger = document.querySelector('.hamburger');
@@ -336,8 +352,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // Check if YouTube section exists
+    const youtubeSection = document.getElementById('youtube-videos');
+    console.log('📺 YouTube section found:', !!youtubeSection);
+    if (youtubeSection) {
+        console.log('📺 YouTube container HTML:', youtubeSection.innerHTML.substring(0, 100) + '...');
+    }
+    
     // Initialize YouTube section
-    initializeYouTube();
+    console.log('🚀 About to initialize YouTube...');
+    try {
+        initializeYouTube();
+    } catch (error) {
+        console.error('❌ Error initializing YouTube:', error);
+    }
     
     console.log('Personal Website Template loaded successfully! 🚀');
 });
