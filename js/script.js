@@ -88,6 +88,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('contactForm');
     
     contactForm.addEventListener('submit', function(e) {
+        // Don't prevent default if using Formspree
+        if (contactForm.action.includes('formspree.io')) {
+            // Let Formspree handle the submission
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            // Re-enable button after a delay (Formspree will redirect)
+            setTimeout(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 3000);
+            return; // Let form submit naturally
+        }
+        
+        // For other form handlers, prevent default and validate
         e.preventDefault();
         
         // Get form data
