@@ -393,242 +393,167 @@ p {
     border-color: var(--primary-color);
 }
 
-/* Certifications Section - Creative Masonry Design */
+/* Certifications Section */
 .certifications {
     padding: 100px 0;
-    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%);
+    background-color: var(--background-alt);
 }
 
-.certifications-masonry {
+.certifications-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
+    margin-top: 2rem;
 }
 
-/* Certification Cards */
 .cert-card {
     background: white;
-    border-radius: 20px;
+    border-radius: 16px;
     padding: 2rem;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    transition: all 0.4s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
     position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .cert-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
-/* Card Headers */
-.cert-header {
+.cert-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--primary-color);
+    border-radius: 12px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
     margin-bottom: 1.5rem;
 }
 
-.cert-brand {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.cert-brand i {
-    font-size: 1.5rem;
-    color: var(--primary-color);
-}
-
-.brand-name {
-    font-weight: 600;
-    color: var(--text-color);
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-/* Badges */
-.cert-badge {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+.cert-icon i {
+    font-size: 1.8rem;
     color: white;
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
-.cert-badge.orange {
-    background: linear-gradient(135deg, #ff6b35, #f7931e);
+.cert-icon.excel {
+    background: #217346;
 }
 
-.cert-badge.gradient {
-    background: linear-gradient(135deg, #667eea, #764ba2);
+.cert-icon.security {
+    background: #6b7280;
 }
 
-/* Card Titles */
-.cert-card h3 {
+.cert-content h3 {
     color: var(--text-color);
-    font-size: 1.4rem;
-    font-weight: 700;
+    font-size: 1.25rem;
+    font-weight: 600;
     margin-bottom: 1rem;
     line-height: 1.3;
 }
 
-/* Special Card Styles */
-.salesforce-primary {
-    background: linear-gradient(135deg, #00a1e0 0%, #0066cc 100%);
+.cert-badge {
+    background: var(--primary-color);
     color: white;
-    position: relative;
-    overflow: hidden;
-}
-
-.salesforce-primary .cert-brand i,
-.salesforce-primary .brand-name,
-.salesforce-primary h3 {
-    color: white;
-}
-
-.salesforce-primary .cert-year {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    backdrop-filter: blur(10px);
-}
-
-.cert-shine {
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transform: rotate(45deg);
-    animation: shine 3s infinite;
-}
-
-@keyframes shine {
-    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-}
-
-.excel-suite {
-    background: linear-gradient(135deg, #217346, #0f5132);
-    color: white;
-}
-
-.excel-suite .cert-brand i,
-.excel-suite .brand-name,
-.excel-suite h3 {
-    color: white;
-}
-
-.excel-suite .cert-provider {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.hubspot-card {
-    background: linear-gradient(135deg, #ff7a59, #ff5722);
-    color: white;
-}
-
-.hubspot-card .cert-brand i,
-.hubspot-card .brand-name,
-.hubspot-card h3,
-.hubspot-card .cert-description {
-    color: white;
-}
-
-.ai-tech {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-}
-
-.ai-tech .cert-brand i,
-.ai-tech .brand-name,
-.ai-tech h3 {
-    color: white;
-}
-
-/* Skill Pills */
-.cert-skills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-}
-
-.skill-pill {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    padding: 0.4rem 0.8rem;
-    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
     font-size: 0.75rem;
-    font-weight: 500;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    margin-bottom: 0.75rem;
 }
 
-/* Mini Items List */
-.cert-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+.cert-badge.orange {
+    background: #ff6b35;
 }
 
-.cert-mini-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-}
-
-.cert-mini-item i {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.9rem;
-    width: 16px;
-}
-
-.cert-mini-item span {
-    font-size: 0.85rem;
-    font-weight: 500;
-}
-
-.cert-mini-item small {
-    margin-left: auto;
-    opacity: 0.7;
-    font-size: 0.7rem;
-}
-
-/* Providers and Years */
-.cert-provider {
-    color: var(--text-light);
-    font-size: 0.85rem;
-    font-weight: 500;
-    margin-top: 1rem;
+.cert-badge.modern {
+    background: linear-gradient(135deg, #667eea, #764ba2);
 }
 
 .cert-year {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 0.4rem 1rem;
-    border-radius: 15px;
+    color: var(--primary-color);
     font-weight: 600;
+    font-size: 0.9rem;
+    background: rgba(37, 99, 235, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.cert-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.cert-list li {
+    padding: 0.5rem 0;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cert-list li i {
+    color: var(--primary-color);
+    font-size: 0.8rem;
+    width: 16px;
+}
+
+.cert-provider {
+    color: var(--text-light);
     font-size: 0.85rem;
-    backdrop-filter: blur(10px);
+    font-style: italic;
+    margin-top: 1rem;
 }
 
 .cert-description {
+    color: var(--text-light);
     font-size: 0.9rem;
-    opacity: 0.9;
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
+    line-height: 1.4;
+}
+
+/* Special styling for primary cert */
+.primary-cert {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+}
+
+.primary-cert .cert-content h3,
+.primary-cert .cert-year,
+.primary-cert .cert-badge {
+    color: white;
+}
+
+.primary-cert .cert-year {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.primary-cert .cert-badge {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Special styling for themed cards */
+.hubspot {
+    border-left: 4px solid #ff6b35;
+}
+
+.hubspot .cert-icon {
+    background: #ff6b35;
+}
+
+.ai {
+    border-left: 4px solid #667eea;
+}
+
+.ai .cert-icon {
+    background: linear-gradient(135deg, #667eea, #764ba2);
 }
 
 /* Portfolio Section */
@@ -891,23 +816,13 @@ textarea {
         gap: 3rem;
     }
 
-    .certifications-masonry {
+    .certifications-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
-        padding: 0 1rem;
     }
 
     .cert-card {
         padding: 1.5rem;
-    }
-
-    .cert-skills {
-        gap: 0.4rem;
-    }
-
-    .skill-pill {
-        font-size: 0.7rem;
-        padding: 0.3rem 0.6rem;
     }
 }
 
