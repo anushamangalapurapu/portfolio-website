@@ -341,8 +341,172 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // YouTube Integration
+class YouTubeAPI {
+    constructor() {
+        // You need to get your API key from Google Cloud Console
+        // 1. Go to https://console.cloud.google.com/
+        // 2. Create a new project or select existing one
+        // 3. Enable YouTube Data API v3
+        // 4. Create credentials (API Key)
+        // 5. Restrict the API key to YouTube Data API v3
+        this.apiKey = 'YOUR_YOUTUBE_API_KEY_HERE'; // Replace with your actual API key
+        this.channelId = null;
+        this.channelHandle = '@anushajournal';
+        this.baseUrl = 'https://www.googleapis.com/youtube/v3';
+    }
+
+    // Get channel ID from handle
+    async getChannelId() {
+        if (this.channelId) return this.channelId;
+        
+        try {
+            const response = await fetch(
+                `${this.baseUrl}/search?part=snippet&type=channel&q=${this.channelHandle}&key=${this.apiKey}`
+            );
+            const data = await response.json();
+            
+            if (data.items && data.items.length > 0) {
+                this.channelId = data.items[0].snippet.channelId;
+                return this.channelId;
+            }
+        } catch (error) {
+            console.error('Error fetching channel ID:', error);
+        }
+        return null;
+    }
+
+    // Get channel statistics
+    async getChannelStats() {
+        const channelId = await this.getChannelId();
+        if (!channelId) return null;
+
+        try {
+            const response = await fetch(
+                `${this.baseUrl}/channels?part=statistics&id=${channelId}&key=${this.apiKey}`
+            );
+            const data = await response.json();
+            
+            if (data.items && data.items.length > 0) {
+                const stats = data.items[0].statistics;
+                return {
+                    subscriberCount: parseInt(stats.subscriberCount || 0),
+                    videoCount: parseInt(stats.videoCount || 0),
+                    viewCount: parseInt(stats.viewCount || 0)
+                };
+            }
+        } catch (error) {
+            console.error('Error fetching channel stats:', error);
+        }
+        return null;
+    }
+
+    // Get latest videos from channel
+    async getLatestVideos(maxResults = 3) {
+        const channelId = await this.getChannelId();
+        if (!channelId) return [];
+
+        try {
+            // Get video list
+            const searchResponse = await fetch(
+                `${this.baseUrl}/search?part=snippet&channelId=${channelId}&maxResults=${maxResults}&order=date&type=video&key=${this.apiKey}`
+            );
+            const searchData = await searchResponse.json();
+            
+            if (!searchData.items || searchData.items.length === 0) {
+                return [];
+            }
+
+            // Get video statistics and details
+            const videoIds = searchData.items.map(item => item.id.videoId).join(',');
+            const detailsResponse = await fetch(
+                `${this.baseUrl}/videos?part=statistics,contentDetails&id=${videoIds}&key=${this.apiKey}`
+            );
+            const detailsData = await detailsResponse.json();
+
+            // Combine search results with detailed statistics
+            return searchData.items.map((item, index) => {
+                const details = detailsData.items[index];
+                return {
+                    id: item.id.videoId,
+                    title: item.snippet.title,
+                    thumbnail: item.snippet.thumbnails.medium.url,
+                    views: parseInt(details.statistics.viewCount || 0),
+                    publishedAt: item.snippet.publishedAt,
+                    duration: this.formatDuration(details.contentDetails.duration)
+                };
+            });
+        } catch (error) {
+            console.error('Error fetching videos:', error);
+            return [];
+        }
+    }
+
+    // Convert ISO 8601 duration to readable format
+    formatDuration(duration) {
+        const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+        if (!match) return '';
+        
+        const hours = parseInt(match[1] || 0);
+        const minutes = parseInt(match[2] || 0);
+        const seconds = parseInt(match[3] || 0);
+        
+        if (hours > 0) {
+            return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    // Check if API key is configured
+    isConfigured() {
+        return this.apiKey && this.apiKey !== 'YOUR_YOUTUBE_API_KEY_HERE';
+    }
+}
+
+// Initialize YouTube integration
 function initializeYouTube() {
-    // Sample video data
+    const youtube = new YouTubeAPI();
+    
+    if (!youtube.isConfigured()) {
+        console.warn('YouTube API key not configured. Using sample data.');
+        // Fall back to sample data
+        loadSampleData();
+        return;
+    }
+
+    // Load real data from YouTube API
+    loadYouTubeData(youtube);
+}
+
+// Load real data from YouTube API
+async function loadYouTubeData(youtube) {
+    try {
+        // Show loading state
+        showLoadingState();
+        
+        // Load videos and stats in parallel
+        const [videos, stats] = await Promise.all([
+            youtube.getLatestVideos(3),
+            youtube.getChannelStats()
+        ]);
+        
+        if (videos && videos.length > 0) {
+            displayVideos(videos);
+        } else {
+            loadSampleData(); // Fallback to sample data
+        }
+        
+        if (stats) {
+            updateYouTubeStats(stats);
+        }
+        
+    } catch (error) {
+        console.error('Error loading YouTube data:', error);
+        loadSampleData(); // Fallback to sample data
+    }
+}
+
+// Load sample data as fallback
+function loadSampleData() {
     const sampleVideos = [
         {
             id: 'sample1',
@@ -376,6 +540,33 @@ function initializeYouTube() {
         subscriberCount: 500,
         viewCount: 25000
     });
+}
+
+// Show loading state
+function showLoadingState() {
+    const videosContainer = document.getElementById('youtube-videos');
+    if (videosContainer) {
+        videosContainer.innerHTML = `
+            <div class="video-placeholder">
+                <div class="placeholder-content">
+                    <i class="fab fa-youtube loading-pulse"></i>
+                    <p>Loading latest videos...</p>
+                </div>
+            </div>
+            <div class="video-placeholder">
+                <div class="placeholder-content">
+                    <i class="fab fa-youtube loading-pulse"></i>
+                    <p>Loading latest videos...</p>
+                </div>
+            </div>
+            <div class="video-placeholder">
+                <div class="placeholder-content">
+                    <i class="fab fa-youtube loading-pulse"></i>
+                    <p>Loading latest videos...</p>
+                </div>
+            </div>
+        `;
+    }
 }
 
 // Create SVG thumbnail for sample videos
@@ -420,8 +611,12 @@ function formatDate(dateString) {
 
 // Create video card HTML
 function createVideoCard(video) {
+    const videoUrl = video.id.startsWith('sample') 
+        ? 'https://www.youtube.com/@anushajournal'
+        : `https://www.youtube.com/watch?v=${video.id}`;
+        
     return `
-        <div class="video-card" onclick="window.open('https://www.youtube.com/@anushajournal', '_blank')">
+        <div class="video-card" onclick="window.open('${videoUrl}', '_blank')">
             <div class="video-thumbnail">
                 <img src="${video.thumbnail}" alt="${video.title}" onerror="this.style.display='none'">
                 <div class="video-play-overlay">
